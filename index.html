@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justice - Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        /* Hero Animations */
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #fff, #ffd700, #ff69b4, #fff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #667eea;
+            background: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.4);
+            background: linear-gradient(45deg, #ffd700, #ff69b4);
+            color: #fff;
+        }
+        /* Background Animation */
+        
+        .bg-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+        
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            bottom: 10%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+        /* Skills Section */
+        
+        .skills-section {
+            padding: 80px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            position: relative;
+        }
+        
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .skills-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .skill-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .skill-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .skill-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .skill-percentage {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #764ba2;
+        }
+        
+        .skill-bar-container {
+            width: 100%;
+            height: 15px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .skill-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            width: 0;
+            transition: width 2s ease-out;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        .skill-card.visible .skill-bar {
+            width: var(--skill-width);
+        }
+        /* Scroll Indicator */
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-left: 3px solid #fff;
+            border-bottom: 3px solid #fff;
+            transform: rotate(-45deg);
+        }
+        /* Responsive */
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            .skills-title {
+                font-size: 2.5rem;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="bg-animation">
+            <div class="bg-circle circle-1"></div>
+            <div class="bg-circle circle-2"></div>
+            <div class="bg-circle circle-3"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">Justice</h1>
+            <h2 class="hero-subtitle">Full Stack Developer</h2>
+            <p class="hero-description">
+                Crafting beautiful, responsive web experiences with modern technologies
+            </p>
+            <button class="cta-button">View My Projects</button>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section">
+        <div class="skills-container">
+            <h2 class="skills-title">Technical Skills</h2>
+
+            <div class="skills-grid">
+                <!-- HTML -->
+                <div class="skill-card" data-skill="95">
+                    <div class="skill-header">
+                        <span class="skill-name">HTML</span>
+                        <span class="skill-percentage">95%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" style="--skill-width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- CSS -->
+                <div class="skill-card" data-skill="93">
+                    <div class="skill-header">
+                        <span class="skill-name">CSS</span>
+                        <span class="skill-percentage">93%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" style="--skill-width: 93%"></div>
+                    </div>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="skill-card" data-skill="90">
+                    <div class="skill-header">
+                        <span class="skill-name">JavaScript</span>
+                        <span class="skill-percentage">90%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" style="--skill-width: 90%"></div>
+                    </div>
+                </div>
+
+                <!-- TypeScript -->
+                <div class="skill-card" data-skill="87">
+                    <div class="skill-header">
+                        <span class="skill-name">TypeScript</span>
+                        <span class="skill-percentage">87%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" style="--skill-width: 87%"></div>
+                    </div>
+                </div>
+
+                <!-- React -->
+                <div class="skill-card" data-skill="92">
+                    <div class="skill-header">
+                        <span class="skill-name">React</span>
+                        <span class="skill-percentage">92%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" style="--skill-width: 92%"></div>
+                    </div>
+                </div>
+
+                <!-- Next.js -->
+                <div class="skill-card" data-skill="88">
+                    <div class="skill-header">
+                        <span class="skill-name">Next.js</span>
+                        <span class="skill-percentage">88%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" style="--skill-width: 88%"></div>
+                    </div>
+                </div>
+
+                <!-- Tailwind CSS -->
+                <div class="skill-card" data-skill="94">
+                    <div class="skill-header">
+                        <span class="skill-name">Tailwind CSS</span>
+                        <span class="skill-percentage">94%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" style="--skill-width: 94%"></div>
+                    </div>
+                </div>
+
+                <!-- Node.js -->
+                <div class="skill-card" data-skill="85">
+                    <div class="skill-header">
+                        <span class="skill-name">Node.js</span>
+                        <span class="skill-percentage">85%</span>
+                    </div>
+                    <div class="skill-bar-container">
+                        <div class="skill-bar" style="--skill-width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Scroll animation observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+
+        // Observe all skill cards
+        document.querySelectorAll('.skill-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+
+</html>
